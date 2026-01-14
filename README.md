@@ -71,7 +71,6 @@ This script will:
 ./shell.sh
 ```
 
-You're now inside the ROS2 environment!
 
 ## Usage
 
@@ -122,7 +121,7 @@ ros2 launch moveit2_tutorials demo.launch.py
 rviz2
 ```
 
-### Building Your ROS2 Workspace
+### Building The ROS2 Workspace
 
 ```bash
 # Navigate to workspace
@@ -167,16 +166,7 @@ The container includes these pre-configured aliases:
 - `rn` - List ROS2 nodes
 - `rs` - List ROS2 services
 
-## Networking
-
-The container uses **host networking mode**, which means:
-- ROS2 nodes in the container can communicate with nodes on the host
-- No need to configure ROS_DOMAIN_ID or DDS settings (unless you want to)
-- All ports are directly accessible
-
-To use bridge networking instead, edit `docker-compose.yml` and change `network_mode: host` to a custom network.
-
-## Troubleshooting
+# Troubleshooting
 
 ### Display Issues
 
@@ -292,13 +282,3 @@ devices:
 - Container runs in privileged mode for full USB/device access
 - All data in `/ros2_ws` is preserved between container restarts
 - GPU support is automatic if NVIDIA GPU and drivers are detected
-
-## Support
-
-For ROS2 documentation: https://docs.ros.org/en/humble/  
-For MoveIt2 tutorials: https://moveit.picknik.ai/humble/  
-For RealSense ROS: https://github.com/IntelRealSense/realsense-ros
-
-## License
-
-This Docker setup is provided as-is for robotics development and education.
