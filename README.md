@@ -4,15 +4,15 @@ A comprehensive Docker environment for ROS2 Humble with Intel RealSense support,
 
 ## Features
 
-✅ **ROS2 Humble Desktop Full** - Complete ROS2 installation  
-✅ **Intel RealSense Support** - SDK and ROS2 wrapper pre-installed  
-✅ **NVIDIA GPU Passthrough** - Automatic GPU detection and configuration  
-✅ **USB Passthrough** - Direct access to RealSense cameras and other USB devices  
-✅ **Display Passthrough** - Run GUI applications (RViz2, Gazebo, rqt)  
-✅ **Host Networking** - Seamless ROS2 node discovery  
-✅ **Persistent Storage** - Your workspace is saved on the host  
-✅ **Gazebo Simulation** - Pre-installed and configured  
-✅ **MoveIt2** - Motion planning framework included  
+ - **ROS2 Humble Desktop Full** - Complete ROS2 installation  
+ - **Intel RealSense Support** - SDK and ROS2 wrapper pre-installed  
+ - **NVIDIA GPU Passthrough** - Automatic GPU detection and configuration  
+ - **USB Passthrough** - Direct access to RealSense cameras and other USB devices  
+ - **Display Passthrough** - Run GUI applications (RViz2, Gazebo, rqt)  
+ - **Host Networking** - Seamless ROS2 node discovery  
+ - **Persistent Storage** - Your workspace is saved on the host  
+ - **Gazebo Simulation** - Pre-installed and configured  
+ - **MoveIt2** - Motion planning framework included  
 
 ## Prerequisites
 
