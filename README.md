@@ -41,8 +41,6 @@ ros2-docker/
 ├── docker-compose.yml
 ├── build.sh
 ├── start.sh
-├── shell.sh
-├── stop.sh
 └── README.md
 ```
 
@@ -63,12 +61,6 @@ This script will:
 
 ```bash
 ./start.sh
-```
-
-### 4. Enter the Container
-
-```bash
-./shell.sh
 ```
 
 
