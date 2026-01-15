@@ -1,0 +1,28 @@
+# Ignore ROS2 workspace
+ros2_ws/
+
+# Ignore config folder
+config/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Build artifacts
+build/
+install/
+log/
+*.egg-info/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
