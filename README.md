@@ -216,12 +216,6 @@ sudo chown -R $USER:$USER ros2_ws/
 # Start container
 ./start.sh
 
-# Enter container
-./shell.sh
-
-# Stop container
-./stop.sh
-
 # View logs
 docker-compose logs -f
 
