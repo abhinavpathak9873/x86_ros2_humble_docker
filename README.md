@@ -245,14 +245,6 @@ Then rebuild:
 docker-compose build --no-cache
 ```
 
-### Change ROS_DOMAIN_ID
-
-Edit `docker-compose.yml`:
-```yaml
-environment:
-  - ROS_DOMAIN_ID=42  # Change to your domain ID
-```
-
 ### Add More USB Devices
 
 Edit `docker-compose.yml` under `devices:` section:
