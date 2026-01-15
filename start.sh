@@ -1,27 +1,27 @@
 #!/bin/bash
 
-# Colors for output
+# Colors
 GREEN='\033[0;32m'
-YELLOW='\033[1;33m'
-NC='\033[0m'
+BLUE='\033[0;34m'
+NC='\033[0m' # No Color
 
-echo -e "${GREEN}Starting ROS2 Humble Container...${NC}"
+echo -e "${BLUE}Starting ROS2 Humble + RealSense Container...${NC}"
 
-# Allow X server connections
+# Allow X11 forwarding
 xhost +local:docker > /dev/null 2>&1
 
-# Start the container
-docker-compose up -d
+docker run -it --rm \
+    --privileged \
+    --network=host \
+    --name ros2-realsense \
+    -e DISPLAY=$DISPLAY \
+    -e QT_X11_NO_MITSHM=1 \
+    -v /etc/udev/rules.d:/etc/udev/rules.d \
+    -v /dev:/dev \
+    -v /tmp/.X11-unix:/tmp/.X11-unix:rw \
+    -v $(pwd)/ros2_ws:/ros2_ws \
+    --device-cgroup-rule='c 81:* rmw' \
+    --device-cgroup-rule='c 189:* rmw' \
+    ros2-humble-realsense:latest
 
-if [ $? -eq 0 ]; then
-    echo -e "${GREEN}Container started successfully!${NC}"
-    echo ""
-    echo -e "${YELLOW}To enter the container, run:${NC}"
-    echo "  docker-compose exec ros2_humble bash"
-    echo ""
-    echo -e "${YELLOW}Or simply run:${NC}"
-    echo "  ./shell.sh"
-else
-    echo -e "${RED}Failed to start container${NC}"
-    exit 1
-fi
+echo -e "${GREEN}Container stopped${NC}"

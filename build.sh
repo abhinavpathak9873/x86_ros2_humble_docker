@@ -50,7 +50,7 @@ mkdir -p config
 echo -e "${YELLOW}Creating custom .bashrc...${NC}"
 cat > config/.bashrc << 'EOF'
 # Source ROS2
-source /opt/ros/humble/setup.bash
+source /opt/ros/humble/setup.bash   
 
 # Source workspace if built
 if [ -f /ros2_ws/install/setup.bash ]; then
