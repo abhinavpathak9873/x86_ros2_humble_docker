@@ -1,3 +1,4 @@
+
 # Use official ROS2 Humble base image
 FROM osrf/ros:humble-desktop-full
 
@@ -89,14 +90,14 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Create workspace directory
-RUN mkdir -p /ros2_ws/src
+RUN mkdir -p /kuka_ws/src
 
 # Set working directory
-WORKDIR /ros2_ws
+WORKDIR /kuka_ws
 
 # Source ROS2 setup in bashrc
 RUN echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
-RUN echo "if [ -f /ros2_ws/install/setup.bash ]; then source /ros2_ws/install/setup.bash; fi" >> ~/.bashrc
+RUN echo "if [ -f /kuka_ws/install/setup.bash ]; then source /kuka_ws/install/setup.bash; fi" >> ~/.bashrc
 
 # Create smart entrypoint script that auto-installs udev rules
 RUN echo '#!/bin/bash\n\
@@ -137,8 +138,8 @@ fi\n\
 source /opt/ros/humble/setup.bash\n\
 \n\
 # Source workspace if it exists\n\
-if [ -f /ros2_ws/install/setup.bash ]; then\n\
-    source /ros2_ws/install/setup.bash\n\
+if [ -f /kuka_ws/install/setup.bash ]; then\n\
+    source /kuka_ws/install/setup.bash\n\
 fi\n\
 \n\
 # Execute the command\n\

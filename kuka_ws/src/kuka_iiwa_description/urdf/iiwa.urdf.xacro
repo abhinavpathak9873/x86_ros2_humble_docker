@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="iiwa">
+
+  <xacro:arg name="robot_name" default="iiwa"/>
+  <xacro:arg name="mode" default="mock"/>
+  <xacro:arg name="use_sim" default="true"/>
+
+  <xacro:include filename="$(find kuka_iiwa_description)/urdf/iiwa7.urdf.xacro"/>
+  <xacro:include filename="$(find kuka_iiwa_description)/urdf/lbr_system_interface.xacro"/>
+
+  <link name="world"/>
+
+  <joint name="$(arg robot_name)_world_joint" type="fixed">
+    <parent link="world"/>
+    <child link="$(arg robot_name)_link_0"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <xacro:lbr_system_interface
+    robot_name="$(arg robot_name)"
+    mode="$(arg mode)"
+    system_config_path="$(find kuka_iiwa_description)/urdf/lbr_system_config.yaml"
+    initial_joint_positions_path="$(find kuka_iiwa_description)/urdf/initial_joint_positions.yaml"/>
+
+  <xacro:iiwa7
+    robot_name="$(arg robot_name)"
+    joint_limits_path="$(find kuka_iiwa_description)/urdf/joint_limits.yaml"/>
+
+</robot>
