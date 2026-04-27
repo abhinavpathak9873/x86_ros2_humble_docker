@@ -27,8 +27,12 @@ RUN apt-get update && apt-get install -y \
     python3-colcon-common-extensions \
     python3-rosdep \
     python3-vcstool \
+    python3.10-venv \
     udev \
     && rm -rf /var/lib/apt/lists/*
+
+# Install opencode
+RUN curl -fsSL https://opencode.ai/install | bash
 
 # Install dependencies for building librealsense from source
 RUN apt-get update && apt-get install -y \

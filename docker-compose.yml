@@ -38,3 +38,11 @@ services:
       - 'c 189:* rmw'  # USB devices (RealSense)
     
     command: bash
+
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]

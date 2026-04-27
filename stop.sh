@@ -9,8 +9,7 @@ fi
 
 source .env_vars
 
-echo "Starting container: $CONTAINER_NAME-dev"
-docker compose up -d
+echo "Stopping container: $CONTAINER_NAME-dev"
+docker compose down
 
-echo "Done! Container running."
-echo "Run: docker exec -it $CONTAINER_NAME-dev bash"
+echo "Done!"
