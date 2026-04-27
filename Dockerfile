@@ -2,7 +2,13 @@
 # Use official ROS2 Humble base image
 FROM osrf/ros:humble-desktop-full
 
+# Build arguments
+ARG WS_NAME=kuka_ws
+ARG CONTAINER_NAME=container
+
 # Set environment variables
+ENV WS_NAME=${WS_NAME}
+ENV CONTAINER_NAME=${CONTAINER_NAME}
 ENV DEBIAN_FRONTEND=noninteractive
 ENV NVIDIA_VISIBLE_DEVICES=all
 ENV NVIDIA_DRIVER_CAPABILITIES=all
@@ -90,60 +96,17 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Create workspace directory
-RUN mkdir -p /kuka_ws/src
+RUN mkdir -p /${WS_NAME}/src
 
 # Set working directory
-WORKDIR /kuka_ws
+WORKDIR /${WS_NAME}
 
 # Source ROS2 setup in bashrc
 RUN echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
-RUN echo "if [ -f /kuka_ws/install/setup.bash ]; then source /kuka_ws/install/setup.bash; fi" >> ~/.bashrc
+RUN echo "if [ -f /${WS_NAME}/install/setup.bash ]; then source /${WS_NAME}/install/setup.bash; fi" >> ~/.bashrc
 
 # Create smart entrypoint script that auto-installs udev rules
-RUN echo '#!/bin/bash\n\
-set -e\n\
-\n\
-# Colors for output\n\
-GREEN='"'"'\033[0;32m'"'"'\n\
-YELLOW='"'"'\033[1;33m'"'"'\n\
-NC='"'"'\033[0m'"'"' # No Color\n\
-\n\
-# Auto-install udev rules if /etc/udev/rules.d is mounted\n\
-if [ -d "/etc/udev/rules.d" ] && [ -w "/etc/udev/rules.d" ]; then\n\
-    UDEV_RULES_FILE="/etc/udev/rules.d/99-realsense-libusb.rules"\n\
-    SOURCE_RULES="/usr/src/librealsense/config/99-realsense-libusb.rules"\n\
-    \n\
-    if [ ! -f "$UDEV_RULES_FILE" ]; then\n\
-        echo -e "${YELLOW}Installing RealSense udev rules automatically...${NC}"\n\
-        cp "$SOURCE_RULES" "$UDEV_RULES_FILE"\n\
-        \n\
-        # Try to reload udev rules (works if systemd is available on host)\n\
-        if command -v udevadm >/dev/null 2>&1; then\n\
-            udevadm control --reload-rules 2>/dev/null || true\n\
-            udevadm trigger 2>/dev/null || true\n\
-        fi\n\
-        \n\
-        echo -e "${GREEN}✓ RealSense udev rules installed successfully!${NC}"\n\
-        echo -e "${YELLOW}Please replug your RealSense camera if it was already connected.${NC}"\n\
-    else\n\
-        echo -e "${GREEN}✓ RealSense udev rules already installed${NC}"\n\
-    fi\n\
-else\n\
-    echo -e "${YELLOW}⚠ Warning: /etc/udev/rules.d not mounted or not writable${NC}"\n\
-    echo -e "${YELLOW}RealSense cameras may not work properly.${NC}"\n\
-    echo -e "${YELLOW}Please run with: -v /etc/udev/rules.d:/etc/udev/rules.d${NC}"\n\
-fi\n\
-\n\
-# Source ROS2\n\
-source /opt/ros/humble/setup.bash\n\
-\n\
-# Source workspace if it exists\n\
-if [ -f /kuka_ws/install/setup.bash ]; then\n\
-    source /kuka_ws/install/setup.bash\n\
-fi\n\
-\n\
-# Execute the command\n\
-exec "$@"' > /entrypoint.sh && chmod +x /entrypoint.sh
+RUN printf '#!/bin/bash\nset -e\n\nGREEN="\033[0;32m"\nYELLOW="\033[1;33m"\nNC="\033[0m"\n\nif [ -d "/etc/udev/rules.d" ] && [ -w "/etc/udev/rules.d" ]; then\n    UDEV_RULES_FILE="/etc/udev/rules.d/99-realsense-libusb.rules"\n    SOURCE_RULES="/usr/src/librealsense/config/99-realsense-libusb.rules"\n    if [ ! -f "$UDEV_RULES_FILE" ]; then\n        echo -e "${YELLOW}Installing RealSense udev rules...${NC}"\n        cp "$SOURCE_RULES" "$UDEV_RULES_FILE"\n        if command -v udevadm >/dev/null 2>&1; then\n            udevadm control --reload-rules 2>/dev/null || true\n            udevadm trigger 2>/dev/null || true\n        fi\n        echo -e "${GREEN}RealSense udev rules installed!${NC}"\n    else\n        echo -e "${GREEN}RealSense udev rules already installed${NC}"\n    fi\nelse\n    echo -e "${YELLOW}Warning: /etc/udev/rules.d not mounted${NC}"\nfi\n\nsource /opt/ros/humble/setup.bash\n\nif [ -f /${WS_NAME}/install/setup.bash ]; then\n    source /${WS_NAME}/install/setup.bash\nfi\n\nexec "$@"\n' > /entrypoint.sh && chmod +x /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["bash"]

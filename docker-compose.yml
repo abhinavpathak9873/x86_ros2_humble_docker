@@ -1,13 +1,13 @@
-
-version: '3.8'
-
 services:
   ros2-realsense:
     build:
       context: .
       dockerfile: Dockerfile
-    image: kuka-robox:latest
-    container_name: kuka-robox-dev
+      args:
+        WS_NAME: ${WORKSPACE_NAME}
+        CONTAINER_NAME: ${CONTAINER_NAME}
+    image: ${CONTAINER_NAME}:latest
+    container_name: ${CONTAINER_NAME}-dev
     privileged: true
     network_mode: host
     stdin_open: true
@@ -30,18 +30,11 @@ services:
       # X11 for GUI applications (realsense-viewer, rviz2, etc.)
       - /tmp/.X11-unix:/tmp/.X11-unix:rw
       
-      # Optional: Mount your workspace for development
-      # Uncomment the line below and create ./kuka_ws directory
-      - ./kuka_ws:/kuka_ws
+      # Mount your workspace for development
+      - ./${WORKSPACE_NAME}:/${WORKSPACE_NAME}
     
     device_cgroup_rules:
       - 'c 81:* rmw'   # Video devices (cameras)
       - 'c 189:* rmw'  # USB devices (RealSense)
     
-    # Optional: Uncomment to use NVIDIA GPU
-    #runtime: nvidia
-    
     command: bash
-    
-    # Restart policy (optional)
-    # restart: unless-stopped
