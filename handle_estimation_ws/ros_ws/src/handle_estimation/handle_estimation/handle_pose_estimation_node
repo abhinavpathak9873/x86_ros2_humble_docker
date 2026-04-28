@@ -1,0 +1,3 @@
+#!/bin/bash
+# Use venv python to run the node
+exec /handle_estimation_ws/hander_model/scripts/venv/bin/python3 /handle_estimation_ws/ros_ws/install/handle_estimation/lib/handle_estimation/handle_pose_estimation_node.py "$@"

@@ -1,0 +1,90 @@
+Panels:
+  - Class: rviz_common/Displays
+    Name: Displays
+    Property:
+      Locked: false
+
+Visualization Manager:
+  Displays:
+    - Alpha: 0.5
+      Cell Size: 1
+      Class: rviz/Grid
+      Color: 160; 160; 164
+      Enabled: true
+      Line Style:
+        Line Width: 0.03
+        Style: Lines
+      Name: Grid
+      Plane Cell Count: 100
+      Reference Frame: map
+      Value: true
+
+    - Class: rviz/TF
+      Enabled: true
+      Frame Timeout: 15
+      Frames:
+        All Enabled: false
+        camera_color_optical_frame:
+          Value: true
+        camera_depth_optical_frame:
+          Value: true
+        camera_link:
+          Value: true
+        handle_frame:
+          Value: true
+      Marker Scale: 1
+      Name: TF
+      Show arrows: true
+      Show names: true
+      Value: true
+
+    - Class: rviz/Image
+      Enabled: true
+      Name: Camera Image
+      Image Topic:
+        Depth: 0
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /camera/camera/color/image_raw
+      Queue Size: 2
+      Transport Hint: compressed
+      Value: true
+
+    - Class: rviz/PointCloud2
+      Enabled: true
+      Name: Point Cloud
+      Point Cloud Topic:
+        Depth: 0
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /camera/camera/depth/color/points
+      Queue Size: 2
+      Value: true
+
+    - Class: rviz/Image
+      Enabled: true
+      Name: Handle Overlay
+      Image Topic:
+        Depth: 0
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /handle_estimation/overlay
+      Queue Size: 2
+      Transport Hint: compressed
+      Value: true
+
+  Enabled: true
+  Global Options:
+    Background Color: 48; 48; 48
+    Class: rviz/GlobalOptions
+    Fixed Frame: map
+    Frame Rate: 30
+
+  Window Geometry:
+    Height: 846
+    Width: 1200
+    X: 100
+    Y: 100
